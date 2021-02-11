@@ -7,7 +7,6 @@ package gui.MainWindow.MainPanel;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -17,26 +16,23 @@ import javax.swing.JPanel;
  */
 public class MainPanelToolbar extends JPanel {
     
-    private JLabel label;   // this should be Lektion nr.
+    private JLabel label;
     
 
     public MainPanelToolbar() {
         
-        setLayout(new FlowLayout(FlowLayout.CENTER));
-        
-        setBackground(new Color(175, 226, 189));
+        configureToolbar();
         
         label = new JLabel("");
         add(label, JLabel.CENTER);
     }
     
-    public void setTextForLabel(String text) {
-        label.setText(text);
-        
+    private void configureToolbar() {
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+        setBackground(new Color(175, 226, 189));
     }
     
-    
-    
-    
-    
+    public void setTextForLabel(String text) {
+        label.setText(text);
+    }
 }
