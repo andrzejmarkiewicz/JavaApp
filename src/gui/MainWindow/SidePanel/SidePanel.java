@@ -9,9 +9,7 @@ import gui.Listeners.SidePanelButtonListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -25,39 +23,26 @@ public class SidePanel extends JPanel {
     private SidePaneInPanel panel;
     
     
-    public SidePanel() { 
-  
+    public SidePanel() {
         setLayout(new BorderLayout());
         panel = new SidePaneInPanel();
         add(new JScrollPane(panel));
-        setDefaultSize();
-        
+        setDefaultSizeAndBackground();
     }
 
-    private void setDefaultSize() {
+    private void setDefaultSizeAndBackground() {
         Dimension dim = getPreferredSize();
         dim.width = 270;
         setPreferredSize(dim);
-        
         setBackground(new Color(174,217,246));
     }
 
     public void setButtonListener(SidePanelButtonListener sidePanelButtonListener) {
-            this.listener = sidePanelButtonListener;
-            panel.setButtonListener(sidePanelButtonListener);
-            
+        this.listener = sidePanelButtonListener;
+        panel.setButtonListener(sidePanelButtonListener);
     }
     
-    public JLabel getIconFromButtonText(String text) {
-        return panel.getIconFromButtonText(text);
-    }
-
-    public void setMapLessonNumberToLessonStatus(Map<String, Boolean> map) {
-        panel.setMapLessonNumberToLessonStatus(map);
-        
-    }
-
-    public void checkLessonStatusAndSetIcon() {
-        panel.checkLessonStatusAndSetIcon();
+    public void updateIcons(Map<String, Boolean> mapLessonNumberToLessonStatus) {
+        panel.updateIcons(mapLessonNumberToLessonStatus);
     }
 }
