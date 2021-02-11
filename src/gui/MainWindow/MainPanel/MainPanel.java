@@ -28,6 +28,58 @@ public class MainPanel extends JPanel {
     private JButton goToQuestionsButton;
     private MainPanelToolbar toolbar;
     
+    private JPanel panelForButton;
+    
+    
+    public MainPanel() {
+        setLayout(new BorderLayout());
+        setBackground(new Color(175, 226, 189));
+        
+        goToQuestionsButton = new JButton("Check");
+        panelForButton = new JPanel();
+        textPanel = new TextPanel();
+        toolbar = new MainPanelToolbar();
+        cardPanel = new JPanel();
+        questionsPanel = new QuestionsPanel();
+        
+        panelForButtonConfigure();
+        goToQuestionsButtonConfigure();
+        cardPanelConfigure();
+        
+        add(toolbar, BorderLayout.NORTH);
+        add(cardPanel, BorderLayout.CENTER);
+        
+        goToQuestionsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                questionButtonListener.questionButtonPressed("ABC");
+            }
+        }); 
+    }
+    
+    private void panelForButtonConfigure() {
+        panelForButton.setLayout(new BorderLayout());
+        add(panelForButton, BorderLayout.SOUTH);
+        
+        Dimension dim = panelForButton.getPreferredSize();
+        dim.height = 50;
+        panelForButton.setPreferredSize(dim);
+        panelForButton.setBackground(new Color(175, 226, 189));
+    }
+    
+    private void goToQuestionsButtonConfigure() {
+        goToQuestionsButton.setBackground(new Color(86, 157, 219));
+        goToQuestionsButton.setBorderPainted(true);
+        goToQuestionsButton.setFocusPainted(false);
+        goToQuestionsButton.setPreferredSize(new Dimension(140, 60));
+        panelForButton.add(goToQuestionsButton, BorderLayout.EAST);
+    }
+    
+    private void cardPanelConfigure() {
+        cardPanel.setLayout(new CardLayout());
+        cardPanel.add(textPanel, "text");
+        cardPanel.add(questionsPanel, "question");
+    }
     
     public JPanel getCardPanel() {
         return cardPanel;
@@ -39,61 +91,6 @@ public class MainPanel extends JPanel {
 
     public QuestionsPanel getQuestionsPanel() {
         return questionsPanel;
-    }
-    
-    public MainPanel() {
-        setLayout(new BorderLayout());
-        setBackground(new Color(175, 226, 189));
-        
-
-        JPanel panelForButton = new JPanel();
-        panelForButton.setLayout(new BorderLayout());
-        add(panelForButton, BorderLayout.SOUTH);
-        Dimension dim = panelForButton.getPreferredSize();
-        dim.height = 50;
-        panelForButton.setPreferredSize(dim);
-        panelForButton.setBackground(new Color(175, 226, 189));
-        
-        
-        
-        goToQuestionsButton = new JButton("Check");
-        goToQuestionsButton.setBackground(new Color(86, 157, 219));
-        goToQuestionsButton.setBorderPainted(true);
-        goToQuestionsButton.setFocusPainted(false);
-        goToQuestionsButton.setPreferredSize(new Dimension(140, 60));
-        panelForButton.add(goToQuestionsButton, BorderLayout.EAST);
-        
-        textPanel = new TextPanel();
-        textPanel.setPreferredSize(new Dimension(200, 100));
-        
-
-        toolbar = new MainPanelToolbar();
-        add(toolbar, BorderLayout.NORTH);
-        
-        
-        
-        questionsPanel = new QuestionsPanel();
-  
-        
-        cardPanel = new JPanel();
-        add(cardPanel, BorderLayout.CENTER);
-        cardPanel.setLayout(new CardLayout());
-        
-        cardPanel.add(textPanel, "text");
-        cardPanel.add(questionsPanel, "question");
-        
-        
-        
-        
-        goToQuestionsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                questionButtonListener.questionButtonPressed("ABC");
-//                textPanel.setVisible(false);
-
-            }
-        });        
-        
     }
 
     public MainPanelToolbar getToolbar() {
