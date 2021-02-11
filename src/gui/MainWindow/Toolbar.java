@@ -30,18 +30,24 @@ public class Toolbar extends JPanel {
         
         exitButton = new JButton("Exit");
         
-        setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        setLayout(new FlowLayout(FlowLayout.RIGHT));
+        configureToolbar();
+        configureTextPanel();
         
         add(exitButton);
         
+    }
+    
+    private void configureToolbar() {
+        setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        setLayout(new FlowLayout(FlowLayout.RIGHT));
         setBackground(new Color(174,217,246));
-        
+    }
+    
+    private void configureTextPanel() {
         exitButton.setBackground(new Color(86, 157, 219));
         exitButton.setBorderPainted(true);
         exitButton.setFocusPainted(false);
         exitButton.setPreferredSize(new Dimension(70, 25));
-        
         
         exitButton.addActionListener(new ActionListener() {
             @Override
