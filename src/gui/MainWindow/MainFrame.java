@@ -21,7 +21,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Map;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 /**
  *
@@ -33,16 +32,15 @@ public class MainFrame extends JFrame {
     private MainPanel mainPanel;
     private SidePanel sidePanel;
     private Toolbar toolbar;
+    
     private Controller controller;
 
     public MainFrame() {
         super("LERNEN");
-//        setUndecorated(true);
+        setFrameOptions();
         
-        setLayout(new BorderLayout());
         mainPanel = new MainPanel();
         sidePanel = new SidePanel();
-        
         controller = new Controller();
         toolbar = new Toolbar();
         
@@ -50,19 +48,12 @@ public class MainFrame extends JFrame {
         add(sidePanel, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
         
-        
-        setFrameSizeAndLocation();
-        
-//        loadFromDatabaseIsOpenForView();
-        
         loadFromDatabaseTextAndIconsAndUpdateGui();
         
         
         sidePanel.setButtonListener(new SidePanelButtonListener() {
             @Override
             public void buttonPressed(String text) {
-                JLabel label = sidePanel.getIconFromButtonText(text);
-
                 if(controller.checkIfUnlocked(text)){
                     // getting text from database and setting it to main panel
                     String incomingText = controller.getFromDb(text);
@@ -105,7 +96,6 @@ public class MainFrame extends JFrame {
             }
         });
         
-        
         toolbar.setExitButtonListener(new ExitButtonListener() {
             @Override
             public void exitButtonPressed() {
@@ -123,7 +113,6 @@ public class MainFrame extends JFrame {
             }
         });
         
-        
         mainPanel.getQuestionsPanel().setButtonNextLessonListener(new NextLessonListener() {
             @Override
             public void nextLessonButtonPressed(String lessonNumber) {
@@ -131,8 +120,8 @@ public class MainFrame extends JFrame {
 
                 // UPDATE ICON
                 Map<String, Boolean> mapLessonNumberToLessonStatus = controller.getMapLessonNumberToLessonStatus();
-                sidePanel.setMapLessonNumberToLessonStatus(mapLessonNumberToLessonStatus);
-                sidePanel.checkLessonStatusAndSetIcon(); // update Icon
+                sidePanel.updateIcons(mapLessonNumberToLessonStatus);
+//                sidePanel.updateIcons(); // update Icon
                 String nextLesson = prepareStringNextLesson(lessonNumber);
                 
                 // getting text from database and setting it to main panel
@@ -179,12 +168,18 @@ public class MainFrame extends JFrame {
                 String text = builder.toString();
                 return text;
             }
-            
         });
     }
     
-    private void setFrameSizeAndLocation() {
+    private void setFrameOptions() {
         setSize(900, 500);
+        setFrameLocation();
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+    }
+    
+    private void setFrameLocation() {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
         int screenWidth = screenSize.width;
@@ -192,17 +187,15 @@ public class MainFrame extends JFrame {
         
         setLocation((screenWidth - this.getWidth())/2,
                 (screenHeight - this.getHeight())/2);
-        
-        setVisible(true);        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }   
+    }
 
     private void loadFromDatabaseTextAndIconsAndUpdateGui() {
         controller.loadFromDatabase();
         // based on this values the icon will be displayed
-        Map<String, Boolean> mapLessonNumberToLessonStatus = controller.getMapLessonNumberToLessonStatus();
-
-        sidePanel.setMapLessonNumberToLessonStatus(mapLessonNumberToLessonStatus);
-        sidePanel.checkLessonStatusAndSetIcon();
+        Map<String, Boolean> mapLessonNumberToLessonStatus 
+                = controller.getMapLessonNumberToLessonStatus();
+        
+        sidePanel.updateIcons(mapLessonNumberToLessonStatus);
+        
     }
 }
