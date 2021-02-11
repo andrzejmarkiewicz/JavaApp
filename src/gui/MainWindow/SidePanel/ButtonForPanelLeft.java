@@ -18,9 +18,12 @@ public class ButtonForPanelLeft extends JButton {
     public ButtonForPanelLeft(String text) {
         super(text);
         
+        configureButton();
+    }
+    
+    private void configureButton() {
         setBorderPainted(true);
         setBackground(new Color(86, 157, 219));
-//        setBackground(Color.GRAY); // BLOCKED COLOR
         setFocusPainted(false);
         setPreferredSize(new Dimension(180, 25));
     }
