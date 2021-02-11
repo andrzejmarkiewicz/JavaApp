@@ -30,52 +30,32 @@ public class WelcomeDialog extends JDialog {
     
     private JButton buttonOpen;
     private JButton buttonClose;
-//    private NewJDialog dialog;
     private JLabel welcomeLabel;
     private JLabel welcomeLabelIcon;
-    
 
     public WelcomeDialog() {
-//        setUndecorated(true);
         setDialogSizeAndLocation();
-        
         setLayout(new BorderLayout());
         
         buttonOpen = new JButton("Fortfahren");
         buttonClose = new JButton("Cancel");
         welcomeLabel = new JLabel("WELCOME");
         welcomeLabelIcon = new JLabel();
+        
         welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
         welcomeLabelIcon.setIcon(new ImageIcon(getClass().getResource("/icons/intro3.png")));
         
-//        dialog = new NewJDialog(new JFrame(), true);
-        
- 
-        
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.setBackground(new Color(175, 226, 189));
-        
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBackground(new Color(175, 226, 189));
         
+        configurePanel(buttonPanel);
+        configurePanel(mainPanel);
         
-        buttonOpen.setBorderPainted(true);
-        buttonOpen.setBackground(new Color(86, 157, 219));
-        buttonOpen.setFocusPainted(false);
-        buttonOpen.setPreferredSize(new Dimension(140, 25));
-
-        
-        buttonClose.setBorderPainted(true);
-        buttonClose.setBackground(new Color(86, 157, 219));
-        buttonClose.setFocusPainted(false);
-        buttonClose.setPreferredSize(new Dimension(140, 25));
-
+        configureButton(buttonOpen);
+        configureButton(buttonClose);
         
         add(mainPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        
         
         buttonPanel.add(buttonOpen);
         buttonPanel.add(buttonClose);
@@ -83,10 +63,7 @@ public class WelcomeDialog extends JDialog {
         mainPanel.add(welcomeLabel, BorderLayout.CENTER);
         mainPanel.add(welcomeLabelIcon, BorderLayout.SOUTH);
 
-
-
-        int space = 5;
-        Border spaceBorder = BorderFactory.createEmptyBorder(space, space, space, space);
+        Border spaceBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         mainPanel.setBorder(BorderFactory.createBevelBorder(10, Color.lightGray, Color.BLACK));
         
         
@@ -95,12 +72,11 @@ public class WelcomeDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 setVisible(false);
-//                dialog.setVisible(true);
+                
                 EventQueue.invokeLater(() ->
                 {
                     var mainFrame = new MainFrame();
                 });
-        
             }
         });
         
@@ -112,10 +88,21 @@ public class WelcomeDialog extends JDialog {
             }
         });
     }
+    
+    private void configureButton(JButton button) {
+        button.setBorderPainted(true);
+        button.setBackground(new Color(86, 157, 219));
+        button.setFocusPainted(false);
+        button.setPreferredSize(new Dimension(140, 25));
+    }
+    
+    private void configurePanel(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        panel.setBackground(new Color(175, 226, 189));
+    }
 
     private void setDialogSizeAndLocation() {
-        
-        this.setSize(400, 400);
+        setSize(400, 400);
         
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
@@ -125,13 +112,6 @@ public class WelcomeDialog extends JDialog {
         setLocation((screenWidth - this.getWidth())/2,
                 (screenHeight - this.getHeight())/2);
         
-        setVisible(true);
-        
-        
-        
-        
+        setVisible(true);   
     }
-    
-    
-    
 }
