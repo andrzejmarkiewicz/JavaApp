@@ -22,13 +22,11 @@ public class SaveRead implements Serializable {
     
     private static final String PATH = "/home/andrzej/NetBeansProjects/"
             + "javaApp/javaDeutsch/src/resourcesFiles/saveFile.txt";
-    // "/home/andrzej/NetBeansProjects/javaApp/javaDeutsch/src/resourcesFiles"
 
-    public void saveFile(Map<String, Lesson> users)
-            throws IOException
+    public void saveFile(Map<String, Lesson> mapTextToLesson) throws IOException
     {
         try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(PATH))) {
-            os.writeObject(users);
+            os.writeObject(mapTextToLesson);
         }
     }
 
